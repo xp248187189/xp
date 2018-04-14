@@ -1,0 +1,54 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<title>首页</title>
+	<link rel="Bookmark" href="__COMMON__/img/favicon.ico" >
+	<link rel="Shortcut Icon" href="__COMMON__/img/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="__COMMON__/layui/css/layui.css">
+	<link rel="stylesheet" type="text/css" href="__COMMON__/font-awesome/css/font-awesome.css">
+	<style type="text/css">
+		.ht-box {
+		    display: inline-block;
+		    margin: 15px;
+		    padding: 15px 0;
+		    color: #fff;
+		    width: 12%;
+		}
+	    .ht-box p:first-child {
+	        font-size: 40px;
+	    }
+	</style>
+</head>
+<body style="text-align: center;">
+	<p style="padding: 10px 15px; margin-bottom: 20px; margin-top: 10px; border:1px solid #ddd;display:inline-block;">
+        上次登陆
+        <span style="padding-left:1em;">IP：<?php echo $this->lastLoginInfo['ip']?></span>
+        <span style="padding-left:1em;">地点：<?php echo $this->lastLoginInfo['province'].$this->lastLoginInfo['city']?></span>
+        <span style="padding-left:1em;">时间：<?php echo date('Y-m-d H:i',$this->lastLoginInfo['time']);?></span>
+    </p>
+    <fieldset class="layui-elem-field layui-field-title">
+        <legend>统计信息</legend>
+        <div class="layui-field-box">
+            <div style="display: inline-block; width: 100%;">
+                <div class="ht-box layui-bg-blue">
+                    <p><?php echo $this->userCount;?></p>
+                    <p>用户总数</p>
+                </div>
+                <div class="ht-box layui-bg-red">
+                    <p><?php echo $this->today_add;?></p>
+                    <p>今日注册</p>
+                </div>
+                <div class="ht-box layui-bg-green">
+                    <p><?php echo $this->today_login;?></p>
+                    <p>今日登陆</p>
+                </div>
+                <div class="ht-box layui-bg-orange">
+                    <p><?php echo $this->articleCount;?></p>
+                    <p>文章总数</p>
+                </div>
+            </div>
+        </div>
+    </fieldset>
+</body>
+</html>

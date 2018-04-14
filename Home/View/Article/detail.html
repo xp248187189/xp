@@ -1,0 +1,177 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title><?php echo $this->blogInfo['name']?> - <?php echo $this->info['title'];?></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="keywords" content="<?php echo $this->keyWordsInfo['label'];?>">
+    <meta name="description" content="<?php echo $this->descriptionInfo['label'];?>">
+    <link rel="Bookmark" href="__COMMON__/img/favicon.ico" >
+    <link rel="Shortcut Icon" href="__COMMON__/img/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="__COMMON__/layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="__COMMON__/font-awesome/css/font-awesome.css">
+    <!--全局样式表-->
+    <link href="__PUBLIC__/css/global.css" rel="stylesheet" />
+    <!-- 比较好用的代码着色插件 -->
+    <link href="__PUBLIC__/css/prettify.css" rel="stylesheet" />
+    <!-- 本页样式表 -->
+    <link href="__PUBLIC__/css/detail.css" rel="stylesheet" />
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?439e6887e86da51e6bf85b9f2e3af00b";
+			var s = document.getElementsByTagName("script")[0]; 
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+</head>
+<body>
+    <!-- 导航 -->
+    <?php include APP_PATH.'/'.__MODULE__.'/Public/html/nav.html';?>
+    <!-- 主体（一般只改变这里的内容） -->
+    <div class="blog-body">
+        <div class="blog-container">
+            <blockquote class="layui-elem-quote sitemap layui-breadcrumb shadow">
+                <a href="<?php echo __HTTPTYPE__.'://'.__HOST__;?>" title="网站首页">网站首页</a>
+                <a href="<?php echo __HTTPTYPE__.'://'.__HOST__.'/Article';?>" title="文章专栏">文章专栏</a>
+                <a><cite><?php echo $this->info['title'];?></cite></a>
+            </blockquote>
+            <div class="blog-main">
+                <div class="blog-main-left">
+                    <!-- 文章内容（使用Kingeditor富文本编辑器发表的） -->
+                    <div class="article-detail shadow">
+                        <?php echo html_entity_decode($this->info['content'],ENT_QUOTES);?>
+                    </div>
+                    <!-- 评论区域 -->
+                    <div class="blog-module shadow" style="box-shadow: 0 1px 8px #a6a6a6;">
+                        <fieldset class="layui-elem-field layui-field-title" style="margin-bottom:0">
+                            <legend>来说两句吧</legend>
+                            <div class="layui-field-box">
+                                <form class="layui-form blog-editor" action="" id="commentForm">
+                                    <input type="hidden" name="articleId" value="<?php echo $_GET['id'];?>" />
+                                    <div class="layui-form-item">
+                                        <textarea name="editorContent" lay-verify="content" id="remarkEditor" placeholder="请输入内容" class="layui-textarea layui-hide"></textarea>
+                                    </div>
+                                    <div class="layui-form-item">
+                                        <button class="layui-btn" lay-submit="formRemark" lay-filter="formRemark">提交评论</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </fieldset>
+                        <div class="blog-module-title">最新评论</div>
+                        <ul class="blog-comment" id="commentList">
+                            
+                        </ul>
+                    </div>
+                </div>
+                <div class="blog-main-right">
+                    <!--右边悬浮 平板或手机设备显示-->
+                    <div class="category-toggle"><i class="fa fa-chevron-left"></i></div><!--这个div位置不能改，否则需要添加一个div来代替它或者修改样式表-->
+                    <div class="article-category shadow">
+                        <div class="article-category-title">分类导航</div>
+                        <!-- 点击分类后的页面和artile.html页面一样，只是数据是某一类别的 -->
+                        <?php foreach ($this->categoryList as $key => $value) { ?>
+                        <a <?php echo (isset($_GET['category'])&&$_GET['category']==$value['id'])?'style="border:1px solid #5FB878;color:#5FB878"':'';?> href="<?php echo __HTTPTYPE__.'://'.__HOST__.'/Category/'.$value['id'];?>"><?php echo $value['name']?></a>
+                        <?php } ?>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="blog-module shadow">
+                        <div class="blog-module-title">相似文章</div>
+                        <ul class="fa-ul blog-module-ul">
+                            <?php foreach ($this->xiangshiList as $key => $value) { ?>
+                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="<?php echo __HTTPTYPE__.'://'.__HOST__.'/Detail/'.$value['id'];?>"><?php echo $value['title']?></a></li>
+                            <?php } ?>
+                        </ul>
+                    </div>
+                    <div class="blog-module shadow">
+                        <div class="blog-module-title">随便看看</div>
+                        <ul class="fa-ul blog-module-ul">
+                            <?php foreach ($this->suijiList as $key => $value) { ?>
+                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="<?php echo __HTTPTYPE__.'://'.__HOST__.'/Detail/'.$value['id'];?>"><?php echo $value['title']?></a></li>
+                            <?php } ?>
+                        </ul>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+    <!-- 底部 -->
+    <?php include APP_PATH.'/'.__MODULE__.'/Public/html/foot.html';?>
+<script src="__COMMON__/layui/layui.all.js"></script>
+<script src="__COMMON__/layui/layuiGlobal.js"></script>
+<script src="__COMMON__/js/functions.js"></script>
+<!-- 全局脚本 -->
+<script src="__PUBLIC__/js/global.js"></script>
+<!-- 比较好用的代码着色插件 -->
+<script src="__PUBLIC__/js/prettify.js"></script>
+<!-- 本页脚本 -->
+<script src="__PUBLIC__/js/detail.js"></script>
+<script type="text/javascript">
+flow.load({
+    elem: '#commentList',
+    isLazyimg:true,
+    done: function(page, next){
+        var lis = [];
+        $.get('/getArticleComment/<?php echo $this->info["id"];?>/'+page, function(res){
+            layui.each(res.data, function(index, item){
+                var str ='<li>';
+                    str+=   '<div class="comment-parent">'
+                    str+=         '<img src="'+item.userHead+'" />'
+                    str+=         '<div class="info">'
+                    str+=            '<span class="username">'+item.userAccount+'</span>'
+                    str+=            '<span class="time">'+date("Y-m-d H:i",item.time)+'</span>'
+                    str+=         '</div>'
+                    str+=         '<div class="content">'
+                    str+=            item.connect
+                    str+=         '</div>'
+                    str+=   '</div>'
+                    str+='</li>'
+                lis.push(str);
+            });
+            next(lis.join(''), page < res.pageCount);    
+        },'json');
+    }
+});
+$(function(){
+    var img_max_width = $('.article-detail').width();
+    $('.article-detail').find('img').each(function(){
+        var img_width  = $(this).width();
+        var img_heigth = $(this).height();
+        if (img_width>img_max_width) {
+            $(this).attr('width',img_max_width);
+            var bili = img_width/img_heigth;
+            var img_max_height = Math.round(img_max_width/bili);
+            $(this).attr('height',img_max_height);
+        };
+    })
+})
+//浏览器窗口绑定resize事件,浏览器窗口大小改变，重新设置iframe高度
+$(window).on('resize',function(){
+    var img_max_width = $('.article-detail').width();
+    $('.article-detail').find('img').each(function(){
+        var img_width  = $(this).width();
+        var img_heigth = $(this).height();
+        if (img_width>img_max_width) {
+            $(this).attr('width',img_max_width);
+            var bili = img_width/img_heigth;
+            var img_max_height = Math.round(img_max_width/bili);
+            $(this).attr('height',img_max_height);
+        };
+    });
+});
+$('.article-detail').find('img').click(function(){
+    var width = $(window).width()*0.7;
+    layer.open({
+        type: 1,
+        area:width+'px',
+        title: false,
+        closeBtn: 0,
+        shadeClose: true,
+        content: '<img style="width:'+width+'px;" src="'+$(this).attr('src')+'"/>'
+    });
+});
+</script>
+</body>
+</html>

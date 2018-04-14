@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>笔记添加</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="__COMMON__/layui/css/layui.css">
+	<link rel="stylesheet" type="text/css" href="__COMMON__/font-awesome/css/font-awesome.css">
+</head>
+<body>
+	<form class="layui-form" action="">
+		<div class="layui-form-item">
+			<label class="layui-form-label">标题</label>
+			<div class="layui-input-block">
+		    	<input type="text" name="title" autocomplete="off" class="layui-input" value="">
+		    </div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">URL地址</label>
+			<div class="layui-input-block">
+		    	<input type="text" name="url" autocomplete="off" class="layui-input" value="">
+		    </div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">账号</label>
+			<div class="layui-input-block">
+		    	<input type="text" name="account" autocomplete="off" class="layui-input" value="">
+		    </div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">密码</label>
+			<div class="layui-input-block">
+		    	<input type="text" name="password" autocomplete="off" class="layui-input" value="">
+		    </div>
+		</div>
+		<div class="layui-form-item">
+		    <div class="layui-input-block">
+		      	<button class="layui-btn" lay-submit lay-filter="submit">立即提交</button>
+		      	<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		    </div>
+	    </div>
+	</form>
+<script src="__COMMON__/layui/layui.all.js"></script>
+<script src="__COMMON__/layui/layuiGlobal.js"></script>
+<script type="text/javascript">
+form.on('submit(submit)', function(data){
+	$.ajax({
+		url:"<?php echo u('/Note/ajaxAdd');?>",
+		type:'post',
+		data:data.field,
+		dataType:'json',
+		success:function(result){
+			layer.msg(result.echo);
+		},
+		error:function(result){
+			layer.msg('程序错误!');
+		}
+	});
+	return false;
+});
+</script>
+</body>
+</html>

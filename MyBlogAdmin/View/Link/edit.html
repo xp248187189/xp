@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>友情链接</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="__COMMON__/layui/css/layui.css">
+	<link rel="stylesheet" type="text/css" href="__COMMON__/font-awesome/css/font-awesome.css">
+</head>
+<body>
+	<form class="layui-form" action="">
+		<input type="hidden" name="id" value="<?php echo $this->LinkInfo['id']?>">
+		<div class="layui-form-item">
+			<label class="layui-form-label">名称</label>
+			<div class="layui-input-block">
+		    	<input type="text" name="name" lay-verify="required|name" autocomplete="off" class="layui-input" value="<?php echo $this->LinkInfo['name']?>">
+		    </div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">URL</label>
+			<div class="layui-input-block">
+		    	<input type="text" name="url" lay-verify="required" autocomplete="off" class="layui-input" value="<?php echo $this->LinkInfo['url']?>">
+		    </div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">排序</label>
+			<div class="layui-input-block">
+		    	<input type="text" name="sort" lay-verify="required" autocomplete="off" class="layui-input" value="<?php echo $this->LinkInfo['sort']?>">
+		    </div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">状态</label>
+			<div class="layui-input-block">
+		    	<input type="radio" name="state" value="1" title="启用" <?php echo $this->LinkInfo['state']=='1'?'checked':'';?>>
+      			<input type="radio" name="state" value="0" title="禁止" <?php echo $this->LinkInfo['state']=='0'?'checked':'';?>>
+		    </div>
+		</div>
+		<div class="layui-form-item">
+		    <div class="layui-input-block">
+		      	<button class="layui-btn" lay-submit lay-filter="submit">立即提交</button>
+		      	<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		    </div>
+	    </div>
+	</form>
+<script src="__COMMON__/layui/layui.all.js"></script>
+<script src="__COMMON__/layui/layuiGlobal.js"></script>
+<script type="text/javascript">
+form.on('submit(submit)', function(data){
+	$.ajax({
+		url:"<?php echo u('/Link/ajaxEdit');?>",
+		type:'post',
+		data:data.field,
+		dataType:'json',
+		success:function(result){
+			layer.msg(result.echo);
+		},
+		error:function(result){
+			layer.msg('程序错误!');
+		}
+	});
+	return false;
+});
+</script>
+</body>
+</html>

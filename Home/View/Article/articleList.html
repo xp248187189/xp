@@ -1,0 +1,147 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title><?php echo $this->blogInfo['name']?> - <?php echo $this->titleName;?></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="keywords" content="<?php echo $this->keyWordsInfo['label'];?>">
+    <meta name="description" content="<?php echo $this->descriptionInfo['label'];?>">
+    <link rel="Bookmark" href="__COMMON__/img/favicon.ico" >
+    <link rel="Shortcut Icon" href="__COMMON__/img/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="__COMMON__/layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="__COMMON__/font-awesome/css/font-awesome.css">
+    <!--全局样式表-->
+    <link href="__PUBLIC__/css/global.css" rel="stylesheet" />
+    <!-- 本页样式表 -->
+    <link href="__PUBLIC__/css/article.css" rel="stylesheet" />
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?439e6887e86da51e6bf85b9f2e3af00b";
+			var s = document.getElementsByTagName("script")[0]; 
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+</head>
+<body>
+    <!-- 导航 -->
+    <?php include APP_PATH.'/'.__MODULE__.'/Public/html/nav.html';?>
+    <!-- 主体（一般只改变这里的内容） -->
+    <div class="blog-body">
+        <div class="blog-container">
+            <blockquote class="layui-elem-quote sitemap layui-breadcrumb shadow">
+                <a href="<?php echo __HTTPTYPE__.'://'.__HOST__;?>" title="网站首页">网站首页</a>
+                <a><cite>文章专栏</cite></a>
+            </blockquote>
+            <div class="blog-main">
+                <div class="blog-main-left" id="leftArticleList">
+                    
+                </div>
+                <div class="blog-main-right">
+                    <div class="blog-search">
+                        <form class="layui-form" action="/Search" id="searchForm">
+                            <div class="layui-form-item">
+                                <div class="search-keywords  shadow">
+                                    <input type="text" name="keyWord" lay-verify="required" placeholder="输入关键词搜索" autocomplete="off" class="layui-input" value="<?php echo isset($_GET['keyWord'])?$_GET['keyWord']:'';?>">
+                                </div>
+                                <div class="search-submit  shadow">
+                                    <a class="search-btn" lay-submit lay-filter="formSearch"><i class="fa fa-search"></i></a>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="article-category shadow">
+                        <div class="article-category-title">分类导航</div>
+                        <?php foreach ($this->categoryList as $key => $value) { ?>
+                        <a <?php echo (isset($_GET['category'])&&$_GET['category']==$value['id'])?'style="border:1px solid #5FB878;color:#5FB878"':'';?> href="<?php echo __HTTPTYPE__.'://'.__HOST__.'/Category/'.$value['id'];?>"><?php echo $value['name']?></a>
+                        <?php } ?>
+                        <div class="clear"></div>
+                    </div>
+                    <div class="blog-module shadow">
+                        <div class="blog-module-title">作者推荐</div>
+                        <ul class="fa-ul blog-module-ul">
+                            <?php foreach ($this->isRecommendList as $key => $value) { ?>
+                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="<?php echo __HTTPTYPE__.'://'.__HOST__.'/Detail/'.$value['id'];?>"><?php echo $value['title']?></a></li>
+                            <?php } ?>
+                        </ul>
+                    </div>
+                    <div class="blog-module shadow">
+                        <div class="blog-module-title">随便看看</div>
+                        <ul class="fa-ul blog-module-ul">
+                            <?php foreach ($this->suijiList as $key => $value) { ?>
+                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="<?php echo __HTTPTYPE__.'://'.__HOST__.'/Detail/'.$value['id'];?>"><?php echo $value['title']?></a></li>
+                            <?php } ?>
+                        </ul>
+                    </div>
+                    <!--右边悬浮 平板或手机设备显示-->
+                    <div class="category-toggle"><i class="fa fa-chevron-left"></i></div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+    <!-- 底部 -->
+    <?php include APP_PATH.'/'.__MODULE__.'/Public/html/foot.html';?>
+<script src="__COMMON__/layui/layui.all.js"></script>
+<script src="__COMMON__/layui/layuiGlobal.js"></script>
+<script src="__COMMON__/js/functions.js"></script>
+<!-- 全局脚本 -->
+<script src="__PUBLIC__/js/global.js"></script>
+<script type="text/javascript">
+//回车事件
+document.onkeydown = function (event) {
+    var e = event || window.event;
+    if (e && e.keyCode == 13) { //回车键的键值为13
+        if ($('input[name="keyWord"]').is(":focus")) {
+            $('.search-btn').click();
+        };
+        return false;
+    }
+}; 
+form.on('submit(formSearch)', function(data){
+    window.location.href="<?php echo __HTTPTYPE__.'://'.__HOST__;?>/Search/"+$('input[name="keyWord"]').val();
+    return false;
+});
+flow.load({
+    elem: '#leftArticleList',
+    isLazyimg:true,
+    done: function(page, next){
+        <?php
+            echo 'var keyWord="'.(isset($_GET['keyWord'])?$_GET['keyWord']:'0').'";';
+            echo 'var category='.(isset($_GET['category'])?$_GET['category']:'0').';';
+        ?>
+        var lis = [];
+        $.get('/getData/'+keyWord+'/'+category+'/'+page, function(res){
+            if (res.pageCount == 0) {
+                lis.push('<div class="shadow" style="text-align:center;font-size:16px;padding:40px 15px;background:#fff;margin-bottom:15px;">未找到有关的文章，随便看看吧</div>');
+            };
+            layui.each(res.data, function(index, item){
+                var str ='<div class="article shadow">';
+                    str+=   '<div class="article-left">'
+                    str+=        '<img lay-src="__ROOT__'+item.img+'"/>'
+                    str+=   '</div>'
+                    str+=   '<div class="article-right">'
+                    str+=       '<div class="article-title">'
+                    str+=            '<a href="<?php echo __HTTPTYPE__;?>://<?php echo __HOST__;?>/Detail/'+item.id+'">'+item.title+'</a>'
+                    str+=       '</div>'
+                    str+=       '<div class="article-abstract">'+item.outline+'</div>'
+                    str+=   '</div>'
+                    str+=   '<div class="clear"></div>'
+                    str+=   '<div class="article-footer">'
+                    str+=       '<span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;'+date("Y-m-d",item.addTime)+'</span>'
+                    str+=       '<span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;'+item.author+'</span>'
+                    str+=       '<span><i class="fa fa-tag"></i>&nbsp;&nbsp;<a href="<?php echo __HTTPTYPE__;?>://<?php echo __HOST__;?>/Category/'+item.category_id+'">'+item.categoryName+'</a></span>'
+                    str+=       '<span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;'+item.showNum+'</span>'
+                    str+=       '<span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;'+item.commentCount+'</span>'
+                    str+=   '</div>'
+                    str+='</div>'
+                lis.push(str);
+            }); 
+            next(lis.join(''), page < res.pageCount);    
+        },'json');
+    }
+});
+</script>
+</body>
+</html>

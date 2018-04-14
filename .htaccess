@@ -1,0 +1,52 @@
+<IfModule mod_rewrite.c>
+    # 打开Rerite功能
+    RewriteEngine On
+
+    #首页
+        RewriteRule ^$ index.php/Home/Index/index [L]
+    #首页ajax获取数据
+        RewriteRule ^getDataForIndex/([0-9]*)$ index.php/Home/Index/getDataForIndex/page/$1 [L]
+    #时间轴
+        RewriteRule ^TimeAxis$ index.php/Home/TimeAxis/timeAxis [L]
+    #关于
+        RewriteRule ^About$ index.php/Home/About/about [L]
+    #提交留言
+        RewriteRule ^UserComment$ index.php/Home/About/userComment [L]
+    #ajax获取留言
+        RewriteRule ^getUserComment/([0-9]*)$ index.php/Home/About/getUserComment/page/$1 [L]
+    #文章列表
+        RewriteRule ^Article$ index.php/Home/Article/articleList [L]
+        RewriteRule ^Category/([0-9]*)$ index.php/Home/Article/articleList/category/$1 [L]
+        RewriteRule ^Search/(.*)$ index.php/Home/Article/articleList/keyWord/$1 [L]
+    #文章ajax获取数据
+        RewriteRule ^getData/(.*)/([0-9]*)/([0-9]*)$ index.php/Home/Article/getData/keyWord/$1/category/$2/page/$3 [L]
+    #文章详情
+        RewriteRule ^Detail/([0-9]*)$ index.php/Home/Article/detail/id/$1 [L]
+    #文章评论
+        RewriteRule ^ArticleComment$ index.php/Home/Article/articleComment [L]
+    #ajax获取评论
+        RewriteRule ^getArticleComment/([0-9]*)/([0-9]*)$ index.php/Home/Article/getArticleComment/articleId/$1/page/$2 [L]
+    #QQ登录
+        RewriteRule ^qqLogin$ index.php/Home/User/qqLogin [L]
+    #退出登陆
+        RewriteRule ^userLogOut$ index.php/Home/User/userLogOut [L]
+
+    # 如果请求的是真实存在的文件或目录，直接访问，RewriteCond重写条件
+        RewriteCond %{REQUEST_FILENAME} !-f
+        RewriteCond %{REQUEST_FILENAME} !-d
+
+    #隐藏index.php，RewriteRule重写规则
+        RewriteRule ^(.*)$ index.php/$1 [L]
+
+    #上面这样做的主要原因是：
+    #(1)静态文件能直接访问。
+    #  如果文件或者目录真实存在，则直接访问存在的文件/目录。
+    #  比如，静态文件static/css/main.css真实存在，就可以直接访问它。
+    #(2)程序有单一的入口。
+    #  这种情况是请求地址不是真实存在的文件或目录，这样请求就会传到 index.php 上。
+    #  例如，访问地址：localhost/item/view/1，在文件系统中并不存在这样的文件或目录。
+    #  那么，Apache或Nginx服务器会把请求发给index.php，并且把域名之后的字符串赋值给REQUEST_URI变量。
+    #  这样在PHP中用$_SERVER['REQUEST_URI']就能拿到/item/view/1；
+    #(3)可以用来生成美化的URL，利于SEO。
+
+</IfModule>

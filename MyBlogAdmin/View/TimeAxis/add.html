@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>时间轴添加</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="__COMMON__/layui/css/layui.css">
+	<link rel="stylesheet" type="text/css" href="__COMMON__/font-awesome/css/font-awesome.css">
+</head>
+<body>
+	<form class="layui-form" action="">
+		<div class="layui-form-item">
+			<!-- <div class="layui-inline">
+				<label class="layui-form-label">日期</label>
+				<div class="layui-input-block">
+			    	<input type="text" name="time" id="time" lay-verify="required" autocomplete="off" class="layui-input" value="<?php echo date('Y-m-d H:i');?>">
+			    </div>
+			</div> -->
+			<div class="layui-inline">
+				<label class="layui-form-label">状态</label>
+				<div class="layui-input-block">
+			    	<input type="radio" name="state" value="1" title="启用" checked>
+	      			<input type="radio" name="state" value="0" title="禁止">
+			    </div>
+			</div>
+			<div class="layui-inline">
+				<label class="layui-form-label">首页显示</label>
+				<div class="layui-input-block">
+			    	<input type="radio" name="isHome" value="1" title="是">
+	      			<input type="radio" name="isHome" value="0" title="否" checked>
+			    </div>
+			</div>
+		</div>
+		<div class="layui-form-item">
+			<label class="layui-form-label">内容</label>
+			<div class="layui-input-block">
+		    	<?php showEditor('content','','simpleForSource');?>
+		    </div>
+		</div>
+		<div class="layui-form-item">
+		    <div class="layui-input-block">
+		      	<button class="layui-btn" lay-submit lay-filter="submit">立即提交</button>
+		      	<button type="reset" class="layui-btn layui-btn-primary">重置</button>
+		    </div>
+	    </div>
+	</form>
+<script src="__COMMON__/layui/layui.all.js"></script>
+<script src="__COMMON__/layui/layuiGlobal.js"></script>
+<script type="text/javascript">
+// laydate.render({
+//     elem: '#time',
+//     type: 'datetime',
+//     format: 'yyyy-MM-dd HH:mm'
+// });
+form.on('submit(submit)', function(data){
+	$.ajax({
+		url:"<?php echo u('/TimeAxis/ajaxAdd');?>",
+		type:'post',
+		data:data.field,
+		dataType:'json',
+		success:function(result){
+			layer.msg(result.echo);
+		},
+		error:function(result){
+			layer.msg('程序错误!');
+		}
+	});
+	return false;
+});
+</script>
+</body>
+</html>

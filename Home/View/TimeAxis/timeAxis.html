@@ -1,0 +1,98 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title><?php echo $this->blogInfo['name']?> - 点点滴滴</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="keywords" content="<?php echo $this->keyWordsInfo['label'];?>">
+    <meta name="description" content="<?php echo $this->descriptionInfo['label'];?>">
+    <link rel="Bookmark" href="__COMMON__/img/favicon.ico" >
+    <link rel="Shortcut Icon" href="__COMMON__/img/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="__COMMON__/layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="__COMMON__/font-awesome/css/font-awesome.css">
+    <!-- css动画 -->
+    <link href="__PUBLIC__/css/animate.min.css" rel="stylesheet" />
+    <!--全局样式表-->
+    <link href="__PUBLIC__/css/global.css" rel="stylesheet" />
+    <!-- 本页样式表 -->
+    <link href="__PUBLIC__/css/timeline.css" rel="stylesheet" />
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?439e6887e86da51e6bf85b9f2e3af00b";
+			var s = document.getElementsByTagName("script")[0]; 
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+</head>
+<body>
+    <!-- 导航 -->
+    <?php include APP_PATH.'/'.__MODULE__.'/Public/html/nav.html';?>
+    <!-- 主体（一般只改变这里的内容） -->
+    <div class="blog-body">
+        <div class="blog-container">
+            <blockquote class="layui-elem-quote sitemap layui-breadcrumb shadow">
+                <a href="<?php echo __HTTPTYPE__.'://'.__HOST__;?>" title="网站首页">网站首页</a>
+                <!-- <a href="timeline.html" title="点点滴滴">点点滴滴</a> -->
+                <a><cite>点点滴滴</cite></a>
+            </blockquote>
+            <div class="blog-main">
+                <!-- <div class="child-nav shadow">
+                    <span class="child-nav-btn child-nav-btn-this">时光轴</span>
+                    <span class="child-nav-btn">笔记墙</span>
+                </div> -->
+                <div class="timeline-box shadow">
+                    <div class="timeline-main">
+                        <h1><i class="fa fa-clock-o"></i>时光轴<span> —— 记录生活点点滴滴</span></h1>
+                        <div class="timeline-line"></div>
+                        <?php foreach ($this->timeAxisList as $k => $v) { ?>
+                        <div class="timeline-year">
+                            <h2><a class="yearToggle" href="javascript:;"><?php echo $v['year']?>年</a><i class="fa fa-caret-down fa-fw"></i></h2>
+                            <?php foreach ($v['zi'] as $kk => $vv) { ?>
+                            <div class="timeline-month">
+                                <h3 class=" animated fadeInLeft"><a class="monthToggle" href="javascript:;"><?php echo $vv['month']?>月</a><i class="fa fa-caret-down fa-fw"></i></h3>
+                                <ul>
+                                     <?php foreach ($vv['zi'] as $kkk => $vvv) { ?>
+                                    <li class=" ">
+                                        <div class="h4  animated fadeInLeft">
+                                            <p class="date"><?php echo $vv['month']?>月<?php echo $vvv['day']?>日 <?php echo $vvv['hour'].':'.$vvv['minute'];?></p>
+                                        </div>
+                                        <p class="dot-circle animated "><i class="fa fa-dot-circle-o"></i></p>
+                                        <div class="content animated fadeInRight"><?php echo html_entity_decode($vvv['content'],ENT_QUOTES);?></div>
+                                        <div class="clear"></div>
+                                    </li>
+                                    <?php } ?>
+                                </ul>
+                            </div>
+                            <?php } ?>
+                        </div>
+                        <?php } ?>
+                        <h1 style="padding-top:4px;padding-bottom:2px;margin-top:40px;"><i class="fa fa-hourglass-end"></i>THE END</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 底部 -->
+    <?php include APP_PATH.'/'.__MODULE__.'/Public/html/foot.html';?>
+<script src="__COMMON__/layui/layui.all.js"></script>
+<script src="__COMMON__/layui/layuiGlobal.js"></script>
+<script src="__COMMON__/js/functions.js"></script>
+<!-- 全局脚本 -->
+<script src="__PUBLIC__/js/global.js"></script>
+<!-- 本页脚本 -->
+<script type="text/javascript">
+$(function () {
+    $('.monthToggle').click(function () {
+        $(this).parent('h3').siblings('ul').slideToggle('slow');
+        $(this).siblings('i').toggleClass('fa-caret-down fa-caret-right');
+    });
+    $('.yearToggle').click(function () {
+        $(this).parent('h2').siblings('.timeline-month').slideToggle('slow');
+        $(this).siblings('i').toggleClass('fa-caret-down fa-caret-right');
+    });
+});
+</script>
+</body>
+</html>

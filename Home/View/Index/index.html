@@ -1,0 +1,165 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+	<title><?php echo $this->blogInfo['name']?> - <?php echo $this->blogInfo['introduce']?></title>
+	<meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="keywords" content="<?php echo $this->keyWordsInfo['label'];?>">
+    <meta name="description" content="<?php echo $this->descriptionInfo['label'];?>">
+	<link rel="Bookmark" href="__COMMON__/img/favicon.ico" >
+	<link rel="Shortcut Icon" href="__COMMON__/img/favicon.ico" />
+	<link rel="stylesheet" type="text/css" href="__COMMON__/layui/css/layui.css">
+	<link rel="stylesheet" type="text/css" href="__COMMON__/font-awesome/css/font-awesome.css">
+	<!--全局样式表-->
+    <link href="__PUBLIC__/css/global.css" rel="stylesheet" />
+    <!-- 本页样式表 -->
+    <link href="__PUBLIC__/css/home.css" rel="stylesheet" />
+    <style type="text/css">
+        .layui-flow-more a:hover {color:#009688 !important;}
+    </style>
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?439e6887e86da51e6bf85b9f2e3af00b";
+			var s = document.getElementsByTagName("script")[0]; 
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+</head>
+<body>
+	<!-- 导航 -->
+    <?php include APP_PATH.'/'.__MODULE__.'/Public/html/nav.html';?>
+    <!-- 主体（一般只改变这里的内容） -->
+    <div class="blog-body">
+        <!-- canvas -->
+        <canvas id="canvas-banner" style="background: #393D49;"></canvas>
+        <!--为了及时效果需要立即设置canvas宽高，否则就在home.js中设置-->
+        <script type="text/javascript">
+            var canvas = document.getElementById('canvas-banner');
+            canvas.width = window.document.body.clientWidth - 10;//减去滚动条的宽度
+            if (screen.width >= 992) {
+                canvas.height = window.innerHeight * 1 / 3;
+            } else {
+                canvas.height = window.innerHeight * 2 / 7;
+            }
+        </script>
+        <!-- 这个一般才是真正的主体内容 -->
+        <div class="blog-container">
+            <div class="blog-main">
+                <!-- 网站公告提示 -->
+                <div class="home-tips shadow">
+                    <i style="float:left;line-height:17px;" class="fa fa-volume-up"></i>
+                    <div class="home-tips-container">
+                        <?php foreach ($this->noticeList as $key => $value) { ?>
+                            <span style="color: #009688">
+                                <?php echo html_entity_decode($value['content'],ENT_QUOTES);?>
+                            </span>
+                        <?php } ?>
+                    </div>
+                </div>
+                <!--左边文章列表-->
+                <div class="blog-main-left" id="leftArticleList">
+                </div>
+                <!--右边小栏目-->
+                <div class="blog-main-right">
+                    <div class="blogerinfo shadow">
+                        <div class="blogerinfo-figure">
+                            <img src="__ROOT__<?php echo $this->bloggerInfo['img']?>" alt="<?php echo $this->bloggerInfo['name']?>" style="width:100px;height: 100px;"/>
+                        </div>
+                        <p class="blogerinfo-nickname"><?php echo $this->bloggerInfo['name']?></p>
+                        <p class="blogerinfo-introduce"><?php echo $this->bloggerInfo['introduce']?></p>
+                        <p class="blogerinfo-location"><i class="fa fa-location-arrow"></i>&nbsp;<?php echo $this->bloggerInfo['label']?></p>
+                        <hr />
+                        <div class="blogerinfo-contact">
+                            <a target="_blank" title="QQ交流" href="http://wpa.qq.com/msgrd?v=3&uin=248187189&site=qq&menu=yes"><i class="fa fa-qq fa-2x"></i></a>
+                            <a target="_blank" title="给我写信" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=CTs9MTgxPjgxMEl4eCdqZmQ"><i class="fa fa-envelope fa-2x"></i></a>
+                            <a target="_blank" title="新浪微博" href="https://weibo.com/p/1005055901114781/home?from=page_100505&mod=TAB#place"><i class="fa fa-weibo fa-2x"></i></a>
+                            <a target="_blank" title="Github" href="https://github.com/xp248187189"><i class="fa fa-git fa-2x"></i></a>
+                        </div>
+                    </div>
+                    <div></div><!--占位-->
+                    <div class="blog-module shadow">
+                        <div class="blog-module-title">作者推荐</div>
+                        <ul class="fa-ul blog-module-ul">
+                        	<?php foreach ($this->isRecommendList as $key => $value) { ?>
+                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="<?php echo __HTTPTYPE__.'://'.__HOST__.'/Detail/'.$value['id'];?>"><?php echo $value['title']?></a></li>
+                            <?php } ?>
+                        </ul>
+                    </div>
+                    <div class="blog-module shadow">
+                        <div class="blog-module-title">最新发表</div>
+                        <ul class="fa-ul blog-module-ul">
+                        	<?php foreach ($this->newestList as $key => $value) { ?>
+                            <li><i class="fa-li fa fa-hand-o-right"></i><a href="<?php echo __HTTPTYPE__.'://'.__HOST__.'/Detail/'.$value['id'];?>"><?php echo $value['title']?></a></li>
+                            <?php } ?>
+                        </ul>
+                    </div>
+                    <div class="blog-module shadow">
+                        <div class="blog-module-title">一路走来</div>
+                        <dl class="footprint">
+                            <?php foreach ($this->timeAxisList as $key => $value) { ?>
+                            <dt><?php echo $value['year'].'年'.$value['month'].'月'.$value['day'].'日';?></dt>
+                            <dd><?php echo html_entity_decode($value['content'],ENT_QUOTES);?></dd>
+                            <?php } ?>
+                        </dl>
+                    </div>
+                    <div class="blog-module shadow">
+                        <div class="blog-module-title">网站推荐</div>
+                        <ul class="blogroll">
+                            <?php foreach ($this->linkList as $key => $value) { ?>
+                            <li><a target="_blank" href="<?php echo $value['url']?>" title="<?php echo $value['name']?>"><?php echo $value['name']?></a></li>
+                            <?php } ?>
+                        </ul>
+                    </div>
+                </div>
+                <div class="clear"></div>
+            </div>
+        </div>
+    </div>
+    <!-- 底部 -->
+    <?php include APP_PATH.'/'.__MODULE__.'/Public/html/foot.html';?>
+<script src="__COMMON__/layui/layui.all.js"></script>
+<script src="__COMMON__/layui/layuiGlobal.js"></script>
+<script src="__COMMON__/js/functions.js"></script>
+<!-- 全局脚本 -->
+<script src="__PUBLIC__/js/global.js"></script>
+<!-- 本页脚本 -->
+<script src="__PUBLIC__/js/home.js"></script>
+<script type="text/javascript">
+flow.load({
+    elem: '#leftArticleList',
+    end: '<a style="color:#777" href="<?php echo __HTTPTYPE__;?>://<?php echo __HOST__;?>/Article">点我前往文章专栏查看更多</a>',
+    isLazyimg:true,
+    done: function(page, next){
+      	var lis = [];
+      	$.get('getDataForIndex/'+page, function(res){
+	        layui.each(res.data, function(index, item){
+	        	var str ='<div class="article shadow">';
+                    str+=	'<div class="article-left">'
+                    str+=        '<img lay-src="__ROOT__'+item.img+'"/>'
+                    str+=	'</div>'
+                    str+=   '<div class="article-right">'
+                    str+=		'<div class="article-title">'
+                    str+=            '<a href="<?php echo __HTTPTYPE__;?>://<?php echo __HOST__;?>/Detail/'+item.id+'">'+item.title+'</a>'
+                    str+=       '</div>'
+                    str+=       '<div class="article-abstract">'+item.outline+'</div>'
+                    str+=	'</div>'
+                    str+=   '<div class="clear"></div>'
+                    str+=   '<div class="article-footer">'
+                    str+=		'<span><i class="fa fa-clock-o"></i>&nbsp;&nbsp;'+date("Y-m-d",item.addTime)+'</span>'
+                    str+=		'<span class="article-author"><i class="fa fa-user"></i>&nbsp;&nbsp;'+item.author+'</span>'
+                    str+=		'<span><i class="fa fa-tag"></i>&nbsp;&nbsp;<a href="<?php echo __HTTPTYPE__;?>://<?php echo __HOST__;?>/Category/'+item.category_id+'">'+item.categoryName+'</a></span>'
+                    str+=		'<span class="article-viewinfo"><i class="fa fa-eye"></i>&nbsp;'+item.showNum+'</span>'
+                    str+=		'<span class="article-viewinfo"><i class="fa fa-commenting"></i>&nbsp;'+item.commentCount+'</span>'
+                    str+=	'</div>'
+                    str+='</div>'
+	        	lis.push(str);
+	        });
+	        next(lis.join(''), page < res.pageCount);    
+    	},'json');
+    }
+});
+</script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>博主信息</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="__COMMON__/layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="__COMMON__/font-awesome/css/font-awesome.css">
+    <link rel="stylesheet" type="text/css" href="__PUBLIC__/css/style.css">
+    <style>
+        .list{
+            float: left;
+            width: 150px;
+            height:120px;
+            background: #FFFFEA;
+            /*border: 1px solid;*/
+            margin: 10px;
+            text-align: center;
+        }
+        .top{
+            height: 25px;
+        }
+        .top input{
+            display:none;
+            float: left;
+            margin-left: 6px;
+            margin-top: 6px;
+            -ms-transform: scale(2); /* IE */
+            -moz-transform: scale(2); /* FireFox */
+            -webkit-transform: scale(2); /* Safari and Chrome */
+            -o-transform: scale(2); /* Opera */
+        }
+        .top i{
+            display:none;
+            float: right;
+            margin-right: -9px;
+            margin-top: -7px;
+        }
+        .bottom .fa-folder{
+            color: #FFD700;
+        }
+        .bottom .fa-file-text-o{
+            color: #87CEFF;
+        }
+    </style>
+</head>
+<div>
+    <blockquote class="layui-elem-quote" id="nav_blockquote">
+        <div class="layui-inline">
+            <button class="layui-btn layui-btn-sm" onclick="delMore();">批量删除</button>
+            <button class="layui-btn layui-btn-sm" onclick="selAll();" id="selAll" data="1">全选</button>
+        </div>
+        <div class="layui-inline">
+            <form class="layui-form" id="searchForm">
+                <input type="text" name="keyWord" autocomplete="off" class="layui-input" placeholder="关键字" value="<?php echo $_GET['keyWord'];?>" style="width: 100px;">
+                <button lay-submit lay-filter="search" class="layui-btn layui-btn-sm">搜索</button>
+            </form>
+        </div>
+        <div class="layui-inline" id="queueStr">
+            当前目录：<a href="javascript:;" data="">根目录</a>
+            <?php
+            if(!empty($this->newArr)){
+            foreach($this->newArr as $key => $value){
+            echo ' <i class="fa fa-fw fa-arrow-right"></i> <a href="javascript:;" data="'.$value['str'].'">'.$value['name'].'</a>';
+            }
+            }
+            ?>
+        </div>
+    </blockquote>
+
+    <?php
+	if($this->isfile == 0){
+    foreach($this->showArr as $key => $value){
+    ?>
+    <div class="list">
+        <div class="top">
+            <input type="checkbox" name="" value="<?php echo $value['path']?>" class="checkbox_input">
+            <i class="fa fa-fw fa-2x fa-times"></i>
+        </div>
+        <div class="bottom" data="<?php echo $value['path']?>">
+            <?php echo $value['icon']?>
+            <br/>
+            <a href="javascript:;" title="<?php echo $value['trueName']?>"><?php echo $value['name']?></a>
+        </div>
+    </div>
+    <?php
+		}
+	}else{
+		echo '<div>'.$this->asdstr.'</div>';
+}
+?>
+<script src="__COMMON__/layui/layui.all.js"></script>
+<script src="__COMMON__/layui/layuiGlobal.js"></script>
+<script type="text/javascript">
+    $('#queueStr').find('a').on('click',function () {
+        var path = $(this).attr('data');
+        window.location.href = "<?php echo u('/Runtime/show/path/')?>"+path;
+    });
+    //批量删除
+    function delMore(){
+        var del_path = '';
+        $('.checkbox_input').each(function () {
+            if($(this).prop('checked')){
+                del_path += $(this).attr('value')+',';
+            }
+        });
+        if (del_path == ''){
+            layer.msg('请选择数据');
+            return false;
+        }
+        layer.confirm('真的删除行么', function(index) {
+            del_path = del_path.substring(0,del_path.length-1);
+            $.post('<?php echo u("Runtime/ajaxDel")?>',{path:del_path},function(result){
+                layer.msg(result.echo,{time:2000},function () {
+                    if(result.state){
+                        window.location.reload();
+                    }
+                });
+            },'json');
+        });
+    }
+    //全选
+    function selAll() {
+        var data = $('#selAll').attr('data');
+        if (data == 1){
+            $('.checkbox_input').prop('checked',true);
+            $('.checkbox_input').attr('style','display:block');
+            $('.fa-times').attr('style','display:block');
+            $('#selAll').attr('data',0);
+            $('#selAll').html('全不选');
+        }else{
+            $('.checkbox_input').prop('checked',false);
+            $('.checkbox_input').attr('style','display:none');
+            $('.fa-times').attr('style','display:none');
+            $('#selAll').attr('data',1);
+            $('#selAll').html('全选');
+        }
+    }
+</script>
+
+<?php
+    if($this->isfile == 0){
+?>
+<script type="text/javascript">
+    //双击打开
+    $('.bottom').on('dblclick',function () {
+        var path = $(this).attr('data');
+        window.location.href = "<?php echo u('/Runtime/show/path/')?>"+path;
+    });
+    $('.list').mousemove(function () {
+        $(this).find('.checkbox_input').attr('style','display:block');
+        $(this).find('.fa-times').attr('style','display:block');
+    });
+    $('.list').mouseout(function () {
+        if($(this).find('.checkbox_input').prop('checked')){
+            $(this).find('.checkbox_input').attr('style','display:block');
+            $(this).find('.fa-times').attr('style','display:block');
+        }else{
+            $(this).find('.checkbox_input').attr('style','display:none');
+            $(this).find('.fa-times').attr('style','display:none');
+        }
+    });
+</script>
+<?php
+    }
+?>
+
+</body>
+</html>

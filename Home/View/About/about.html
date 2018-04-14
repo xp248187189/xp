@@ -1,0 +1,207 @@
+﻿<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <title><?php echo $this->blogInfo['name']?> - 关于本站</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <meta name="keywords" content="<?php echo $this->keyWordsInfo['label'];?>">
+    <meta name="description" content="<?php echo $this->descriptionInfo['label'];?>">
+    <link rel="Bookmark" href="__COMMON__/img/favicon.ico" >
+    <link rel="Shortcut Icon" href="__COMMON__/img/favicon.ico" />
+    <link rel="stylesheet" type="text/css" href="__COMMON__/layui/css/layui.css">
+    <link rel="stylesheet" type="text/css" href="__COMMON__/font-awesome/css/font-awesome.css">
+    <!--全局样式表-->
+    <link href="__PUBLIC__/css/global.css" rel="stylesheet" />
+    <!-- 本页样式表 -->
+    <link href="__PUBLIC__/css/about.css" rel="stylesheet" />
+	<script>
+		var _hmt = _hmt || [];
+		(function() {
+			var hm = document.createElement("script");
+			hm.src = "https://hm.baidu.com/hm.js?439e6887e86da51e6bf85b9f2e3af00b";
+			var s = document.getElementsByTagName("script")[0]; 
+			s.parentNode.insertBefore(hm, s);
+		})();
+	</script>
+</head>
+<body>
+    <!-- 导航 -->
+    <?php include APP_PATH.'/'.__MODULE__.'/Public/html/nav.html';?>
+    <!-- 主体（一般只改变这里的内容） -->
+    <div class="blog-body">
+        <div class="blog-container">
+            <blockquote class="layui-elem-quote sitemap layui-breadcrumb shadow">
+                <a href="<?php echo __HTTPTYPE__.'://'.__HOST__;?>" title="网站首页">网站首页</a>
+                <a><cite>关于本站</cite></a>
+            </blockquote>
+            <div class="blog-main">
+                <div class="layui-tab layui-tab-brief shadow" lay-filter="tabAbout">
+                    <ul class="layui-tab-title">
+                        <li class="layui-this" lay-id="1">关于博客</li>
+                        <li lay-id="2">关于作者</li>
+                        <li lay-id="3" id="frinedlink">网站推荐</li>
+                        <li lay-id="4">留言墙</li>
+                    </ul>
+                    <div class="layui-tab-content">
+                        <div class="layui-tab-item layui-show">
+                            <div class="aboutinfo">
+                                <div class="aboutinfo-figure">
+                                    <img src="__PUBLIC__/image/Logo_100.png" alt="<?php echo $this->blogInfo['name'];?>" />
+                                </div>
+                                <p class="aboutinfo-nickname"><?php echo $this->blogInfo['name'];?></p>
+                                <p class="aboutinfo-introduce"><?php echo $this->blogInfo['introduce'];?></p>
+                                <p class="aboutinfo-location"><i class="fa fa-link"></i>&nbsp;&nbsp;<a target="_blank" href="<?php echo __HTTPTYPE__.'://'.__HOST__;?>"><?php echo __HOST__;?></a></p>
+                                <hr />
+                                <div class="aboutinfo-contact">
+                                    <a target="_blank" title="网站首页" href="<?php echo __HTTPTYPE__.'://'.__HOST__;?>"><i class="fa fa-home fa-2x" style="font-size:2.5em;position:relative;top:3px"></i></a>
+                                    <a target="_blank" title="文章专栏" href="<?php echo __HTTPTYPE__.'://'.__HOST__.'/Article';?>"><i class="fa fa-file-text fa-2x"></i></a>
+                                    <!-- <a target="_blank" title="资源分享" href="resource.html"><i class="fa fa-tags fa-2x"></i></a> -->
+                                    <a target="_blank" title="点点滴滴" href="<?php echo __HTTPTYPE__.'://'.__HOST__.'/TimeAxis';?>"><i class="fa fa-hourglass-half fa-2x"></i></a>
+                                </div>
+                                <fieldset class="layui-elem-field layui-field-title">
+                                    <legend>简介</legend>
+                                    <div class="layui-field-box aboutinfo-abstract">
+                                        <?php echo html_entity_decode($this->blogInfo['detail'],ENT_QUOTES);?>
+                                        <h1 style="text-align:center;">The End</h1>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div><!--关于网站End-->
+                        <div class="layui-tab-item">
+                            <div class="aboutinfo">
+                                <div class="aboutinfo-figure">
+                                    <img src="__ROOT__<?php echo $this->bloggerInfo['img']?>" alt="<?php echo $this->bloggerInfo['name']?>" style="width:100px;height: 100px;"/>
+                                </div>
+                                <p class="aboutinfo-nickname"><?php echo $this->bloggerInfo['name']?></p>
+                                <p class="aboutinfo-introduce"><?php echo $this->bloggerInfo['introduce']?></p>
+                                <p class="aboutinfo-location"><i class="fa fa-location-arrow"></i>&nbsp;<?php echo $this->bloggerInfo['label']?></p>
+                                <hr />
+                                <div class="aboutinfo-contact">
+                                    <a target="_blank" title="QQ交流" href="http://wpa.qq.com/msgrd?v=3&uin=248187189&site=qq&menu=yes"><i class="fa fa-qq fa-2x"></i></a>
+                                    <a target="_blank" title="给我写信" href="http://mail.qq.com/cgi-bin/qm_share?t=qm_mailme&email=CTs9MTgxPjgxMEl4eCdqZmQ"><i class="fa fa-envelope fa-2x"></i></a>
+                                    <a target="_blank" title="新浪微博" href="https://weibo.com/p/1005055901114781/home?from=page_100505&mod=TAB#place"><i class="fa fa-weibo fa-2x"></i></a>
+                                    <a target="_blank" title="Github" href="https://github.com/xp248187189"><i class="fa fa-git fa-2x"></i></a>
+                                </div>
+                                <fieldset class="layui-elem-field layui-field-title">
+                                    <legend>简介</legend>
+                                    <div class="layui-field-box aboutinfo-abstract abstract-bloger">
+                                        <?php echo html_entity_decode($this->bloggerInfo['detail'],ENT_QUOTES);?>
+                                        <h1 style="text-align:center;">The End</h1>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div><!--关于作者End-->
+                        <div class="layui-tab-item">
+                            <div class="aboutinfo">
+                                <div class="aboutinfo-figure">
+                                    <img width="100px" src="__PUBLIC__/image/recommend.png" alt="网站推荐" />
+                                </div>
+                                <p class="aboutinfo-nickname">网站推荐</p>
+                                <p class="aboutinfo-introduce">Name：<?php echo $this->blogInfo['name'];?>&nbsp;&nbsp;&nbsp;&nbsp;Site：<?php echo __HTTPTYPE__.'://'.__HOST__;?></p>
+                                <p class="aboutinfo-location">
+                                    <i class="fa fa-close"></i>经常宕机&nbsp;
+                                    <i class="fa fa-close"></i>不合法规&nbsp;
+                                    <i class="fa fa-close"></i>插边球站&nbsp;
+                                    <i class="fa fa-close"></i>红标报毒&nbsp;
+                                    <i class="fa fa-check"></i>原创优先&nbsp;
+                                    <i class="fa fa-check"></i>技术优先
+                                </p>
+                                <hr />
+                                <div class="aboutinfo-contact">
+                                    <p style="font-size:2em;">优秀网站，个人推荐</p>
+                                </div>
+                                <fieldset class="layui-elem-field layui-field-title">
+                                    <legend>Website Recommendation</legend>
+                                    <div class="layui-field-box">
+                                        <ul class="friendlink">
+                                            <?php foreach ($this->linkList as $key => $value) { ?>
+                                            <li>
+                                                <a target="_blank" href="<?php echo $value['url']?>" title="<?php echo $value['name']?>" class="friendlink-item">
+                                                    <p class="friendlink-item-pic"><img src="<?php echo $value['url']?>/favicon.ico" alt="<?php echo $value['name']?>" /></p>
+                                                    <p class="friendlink-item-title"><?php echo $value['name']?></p>
+                                                    <p class="friendlink-item-domain"><?php echo $value['url']?></p>
+                                                </a>
+                                            </li>
+                                            <?php } ?>
+                                        </ul>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div><!--友情链接End-->
+                        <div class="layui-tab-item">
+                            <div class="aboutinfo">
+                                <div class="aboutinfo-figure">
+                                    <img src="__PUBLIC__/image/messagewall.png" alt="留言墙" />
+                                </div>
+                                <p class="aboutinfo-nickname">留言墙</p>
+                                <p class="aboutinfo-introduce">本页面可留言、吐槽、提问。欢迎灌水，杜绝广告！</p>
+                                <p class="aboutinfo-location">
+                                    <i class="fa fa-clock-o"></i>&nbsp;<span id="time"></span>
+                                </p>
+                                <hr id="gt" />
+                                <div class="aboutinfo-contact">
+                                    <p style="font-size:2em;">沟通交流，拉近你我！</p>
+                                </div>
+                                <fieldset class="layui-elem-field layui-field-title">
+                                    <legend>Leave a message</legend>
+                                    <div class="layui-field-box">
+                                        <div class="leavemessage" style="text-align:initial">
+                                            <form class="layui-form blog-editor" action="" id="commentForm">
+                                                <div class="layui-form-item">
+                                                    <textarea name="editorContent" lay-verify="content" id="remarkEditor" placeholder="请输入内容" class="layui-textarea layui-hide"></textarea>
+                                                </div>
+                                                <div class="layui-form-item">
+                                                    <button class="layui-btn" lay-submit="formLeaveMessage" lay-filter="formLeaveMessage">提交留言</button>
+                                                </div>
+                                            </form>
+                                            <ul class="blog-comment" id="commentList">
+                                                
+                                            </ul>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </div>
+                        </div><!--留言墙End-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 底部 -->
+    <?php include APP_PATH.'/'.__MODULE__.'/Public/html/foot.html';?>
+<script src="__COMMON__/layui/layui.all.js"></script>
+<script src="__COMMON__/layui/layuiGlobal.js"></script>
+<script src="__COMMON__/js/functions.js"></script>
+<!-- 全局脚本 -->
+<script src="__PUBLIC__/js/global.js"></script>
+<!-- 本页脚本 -->
+<script src="__PUBLIC__/js/about.js"></script>
+<script type="text/javascript">
+flow.load({
+    elem: '#commentList',
+    isLazyimg:true,
+    done: function(page, next){
+        var lis = [];
+        $.get('/getUserComment/'+page, function(res){
+            layui.each(res.data, function(index, item){
+                var str ='<li>';
+                    str+=   '<div class="comment-parent">'
+                    str+=         '<img src="'+item.userHead+'" />'
+                    str+=         '<div class="info">'
+                    str+=            '<span class="username">'+item.userAccount+'</span>'
+                    str+=         '</div>'
+                    str+=         '<div class="content">'
+                    str+=            item.connect
+                    str+=         '</div>'
+                    str+=         '<p class="info info-footer"><span class="time">'+date("Y-m-d H:i",item.time)+'</span><a class="btn-reply" href="javascript:;" onclick="btnReplyClick(\''+item.userAccount+'\')">回复</a></p>'
+                    str+=   '</div>'
+                    str+='</li>'
+                lis.push(str);
+            });
+            next(lis.join(''), page < res.pageCount);    
+        },'json');
+    }
+});
+</script>
+</body>
+</html>

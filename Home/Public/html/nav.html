@@ -1,0 +1,46 @@
+<nav class="blog-nav layui-header">
+    <div class="blog-container">
+        <!-- QQ互联登陆 -->
+        <?php
+            if(empty($_COOKIE['user_openid'])){
+        ?>
+            <a href="javascript:;" class="blog-user" onclick="location.href='<?php echo __HTTPTYPE__.'://'.__HOST__.'/qqLogin';?>'">
+                <i class="fa fa-qq"></i>
+            </a>
+        <?php
+            }else{
+        ?>
+            <a href="javascript:;" class="blog-user" onclick="location.href='<?php echo __HTTPTYPE__.'://'.__HOST__.'/userLogOut';?>'">
+                <img src="<?php echo decrypt($_COOKIE['user_head'],getConfig('key'));?>"/>
+            </a>
+        <?php
+            }
+        ?>
+        
+        
+        <!-- 记忆碎片 -->
+        <a class="blog-logo" href="<?php echo __HTTPTYPE__.'://'.__HOST__;?>"><?php echo $this->blogInfo['name']?></a>
+        <!-- 导航菜单 -->
+        <ul class="layui-nav" lay-filter="nav">
+            <li class="layui-nav-item <?php echo __CONTROLLER__=='Index'?'layui-this':'';?>">
+                <a href="<?php echo __HTTPTYPE__.'://'.__HOST__;?>"><i class="fa fa-home fa-fw"></i>&nbsp;网站首页</a>
+            </li>
+            <li class="layui-nav-item <?php echo __CONTROLLER__=='Article'?'layui-this':'';?>">
+                <a href="<?php echo __HTTPTYPE__.'://'.__HOST__.'/Article';?>"><i class="fa fa-file-text fa-fw"></i>&nbsp;文章专栏</a>
+            </li>
+            <!-- <li class="layui-nav-item">
+                <a href="javascript:;"><i class="fa fa-tags fa-fw"></i>&nbsp;资源分享</a>
+            </li> -->
+            <li class="layui-nav-item <?php echo __CONTROLLER__=='TimeAxis'?'layui-this':'';?>">
+                <a href="<?php echo __HTTPTYPE__.'://'.__HOST__.'/TimeAxis';?>"><i class="fa fa-hourglass-half fa-fw"></i>&nbsp;点点滴滴</a>
+            </li>
+            <li class="layui-nav-item <?php echo __CONTROLLER__=='About'?'layui-this':'';?>">
+                <a href="<?php echo __HTTPTYPE__.'://'.__HOST__.'/About';?>"><i class="fa fa-info fa-fw"></i>&nbsp;关于本站</a>
+            </li>
+        </ul>
+        <!-- 手机和平板的导航开关 -->
+        <a class="blog-navicon" href="javascript:;">
+            <i class="fa fa-navicon"></i>
+        </a>
+    </div>
+</nav>
