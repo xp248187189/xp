@@ -74,7 +74,7 @@
     <div class="list">
         <div class="top">
             <input type="checkbox" name="" value="<?php echo $value['path']?>" class="checkbox_input">
-            <i class="fa fa-fw fa-2x fa-times"></i>
+            <i class="fa fa-fw fa-2x fa-times" onclick="del('<?php echo $value['path']?>')"></i>
         </div>
         <div class="bottom" data="<?php echo $value['path']?>">
             <?php echo $value['icon']?>
@@ -110,6 +110,18 @@
         layer.confirm('真的删除行么', function(index) {
             del_path = del_path.substring(0,del_path.length-1);
             $.post('<?php echo u("Runtime/ajaxDel")?>',{path:del_path},function(result){
+                layer.msg(result.echo,{time:2000},function () {
+                    if(result.state){
+                        window.location.reload();
+                    }
+                });
+            },'json');
+        });
+    }
+    //单个删除
+    function del(path) {
+        layer.confirm('真的删除行么', function(index) {
+            $.post('<?php echo u("Runtime/ajaxDel")?>',{path:path},function(result){
                 layer.msg(result.echo,{time:2000},function () {
                     if(result.state){
                         window.location.reload();
