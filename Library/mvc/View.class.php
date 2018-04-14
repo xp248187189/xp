@@ -6,12 +6,12 @@ class View{
     protected $_modules;
     protected $_controller;
     protected $_action;
-    protected $str;//模板变量
+    protected $_str;//模板变量
     public function __construct($modules, $controller, $action){
         $this->_modules = $modules;
         $this->_controller = $controller;
         $this->_action = $action;
-        $this->str = array(
+        $this->_str = array(
                         '__PUBLIC__'=>__PUBLIC__,
                         '__COMMON__'=>__COMMON__,
                         '__ROOT__'  =>__ROOT__
@@ -60,11 +60,11 @@ class View{
         //ob_get_clean()，得到当前缓冲区的内容并删除当前输出缓冲区
         //这里就是把缓冲区的内容(html模板)赋值给$content,并删除了缓冲区的内容(也就是html模板)
         $content = ob_get_clean();
-        if(is_array($this->str)){
+        if(is_array($this->_str)){
             //array_keys(),返回包含数组中所有键名的一个新数组
             //array_values(),返回数组的所有值（非键名）
-            //这里就是把$content中的 $this->str中的key值，替换成value值
-            $content=str_replace(array_keys($this->str),array_values($this->str),$content);
+            //这里就是把$content中的 $this->_str中的key值，替换成value值
+            $content=str_replace(array_keys($this->_str),array_values($this->_str),$content);
         }
         //替换完成，再输出html
         return $content;
