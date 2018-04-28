@@ -108,6 +108,7 @@ class Upload {
                             break 2;
                         }
                     }
+                    $tmp_file['field'] = $key;
                     $tmp_file['name'] = $v;
                     $tmp_file['type'] = $value['type'][$k];
                     $tmp_file['tmp_name'] = $value['tmp_name'][$k];
@@ -155,6 +156,7 @@ class Upload {
                         break;
                     }
                 }
+                $tmp_file['field'] = $key;
                 $tmp_file['name'] = $value['name'];
                 $tmp_file['type'] = $value['type'];
                 $tmp_file['tmp_name'] = $value['tmp_name'];
@@ -236,7 +238,7 @@ class Upload {
             if (move_uploaded_file($value['tmp_name'],$newFile)) {
                 $this->return['status'] = true;
                 $this->return['echo'] = '上传成功';
-                $this->return['newFile'][] = array($value['name'],substr($newFile,strlen(APP_PATH)));//把APP_PATH去掉
+                $this->return['newFile'][] = array($value['name'],substr($newFile,strlen(APP_PATH)),$value['field']);//把APP_PATH去掉
             }else{
                 if(!$this->skipError){
                     $this->return['status'] = false;
