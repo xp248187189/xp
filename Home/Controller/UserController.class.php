@@ -9,8 +9,8 @@ class UserController extends Controller{
     public function qqLogin(){
         $code = $_REQUEST["code"];
         //申请QQ互联后得到的APP_ID 和 APP_KEY
-        $app_id = 101449564;
-        $app_key = 'f9d96c8edcea2f32f2f7c27875e43b5c';
+        $app_id = 123456789;
+        $app_key = 'd9f96a8edcea2f32f2f7c27875e43b5c';
         //回调接口，接受QQ服务器返回的信息的脚本
         $callback = 'http://www.yxiupei.cn/qqLogin';
         //实例化qq登陆类，传入上面三个参数
